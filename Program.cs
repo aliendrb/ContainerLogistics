@@ -14,6 +14,8 @@ namespace ContainerLogistics
             Console.WriteLine(c1.SerialNumber);
             NType n1 = new NType(300, 75, 15000, 75000);
             Console.WriteLine(n1.SerialNumber);
+            LType l2 = new LType(100, 20, 3000, 5000);
+            Console.WriteLine(l2.SerialNumber);
         }
     }
 }
