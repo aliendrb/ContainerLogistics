@@ -1,15 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+//using System.ComponentModel;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using ContainerLogistics.Interfaces;
 
 namespace ContainerLogistics.Classes
 {
-    public abstract class Container
+    public abstract class Container : ISerialNumberGenerator
     {
+        private static int _nextId = 1;
+        public int Id { get; } = _nextId++;
+        public float CargoMass { get; set; }
+        public int Height { get; }
+        public float Weight { get; }
+        public int Depth { get; }
+        public string SerialNumber { get; }
+        public float MaxWeight { get; }
+
+        public Container(int height, float weight, int depth, float maxWeight) 
+        {
+            Height = height;
+            Weight = weight;
+            Depth = depth;
+            MaxWeight = maxWeight;
+            SerialNumber = GenerateSerialNumber();
+        }
+
+        public abstract string GenerateSerialNumber();
+
+        public void Unload() { CargoMass = 0; }
         /*
-         * Mass (kg)
+         * Cargo mass (kg)
          * Height (cm)
          * Weight (kg)
          * Depth (cm)

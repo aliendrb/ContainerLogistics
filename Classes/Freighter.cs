@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContainerLogistics.Classes
 {
-    internal class Freighter
+    public class Freighter : Vehicle
     {
     }
 }

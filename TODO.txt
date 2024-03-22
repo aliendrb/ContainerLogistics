@@ -1,0 +1,3 @@
+﻿Figure out all the class attributes
+
+Interface for assigning serial numbers

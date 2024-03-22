@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ContainerLogistics.Classes
 {
-    internal class CType
+    public class CType(int height, float weight, int depth, float maxWeight) : Container(height, weight, depth, maxWeight)
     {
+        public override string GenerateSerialNumber()
+        {
+            return "KON-C-" + Id;
+        }
     }
 }
