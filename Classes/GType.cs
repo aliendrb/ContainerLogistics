@@ -44,7 +44,7 @@
         public void Prepare()
         {
             CargoMass = 0;
-            products.Clear();
+            Products.Clear();
         }
         public void NotifyHazard(string type, Container container)
         {

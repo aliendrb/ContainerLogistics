@@ -14,8 +14,8 @@ namespace ContainerLogistics.Classes
         public int Depth { get; }
         public string SerialNumber { get; }
         public double Capacity { get; set; }
-        public List<Product> products { get; set; } = new List<Product>();
-        public string contentsList { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
+        public string ContentsList { get; set; }
         public bool IsHazardOccured {  get; set; }
 
         public Container(int height, double weight, int depth, int width, double capacity)
@@ -33,7 +33,7 @@ namespace ContainerLogistics.Classes
         public virtual void Unload(Product product) 
         {
             CargoMass -= product.Mass;
-            products.Remove(product);
+            Products.Remove(product);
         }
 
         public virtual void Load(Product product) 
@@ -46,7 +46,7 @@ namespace ContainerLogistics.Classes
                 }
                 else 
                 {
-                    products.Add(product);
+                    Products.Add(product);
                     CargoMass += product.Mass;
                 }
             }
@@ -58,11 +58,12 @@ namespace ContainerLogistics.Classes
 
         public virtual string ListContents() 
         {
-            foreach (Product product in products)
+            ContentsList = "";
+            foreach (Product product in Products)
             {
-                contentsList += $"[ID: {product.Id}, {product.Name}, {product.Mass} kg]\n";
+                ContentsList += $"[ID: {product.Id}, {product.Name}, {product.Mass} kg]\n";
             }
-            return contentsList;
+            return ContentsList;
         }
 
         public override string ToString()

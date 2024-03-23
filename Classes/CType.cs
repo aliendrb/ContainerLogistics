@@ -31,9 +31,9 @@ namespace ContainerLogistics.Classes
                 Console.WriteLine("Cannot store this product here, the temperature is too high!");
                 return;
             }
-            if (products.Count > 0)
+            if (Products.Count > 0)
             {
-                foreach (Product product_1 in products)
+                foreach (Product product_1 in Products)
                 {
                     if (product_1.Name != product.Name)
                     {

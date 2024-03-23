@@ -27,7 +27,7 @@ namespace ContainerLogistics.Classes
                 else
                 {
                     //I could do base.Load() here but it has additional ifs that would have to be checked.
-                    products.Add(product);
+                    Products.Add(product);
                     CargoMass += product.Mass;
                 }
             }

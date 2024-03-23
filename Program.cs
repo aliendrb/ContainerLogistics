@@ -32,7 +32,7 @@ namespace ContainerLogistics
             LType l6 = new LType(10, 10, 10, 10, 100000);
             l6.Load(pl4);*/
 
-            CType c1 = new CType(10, 10, 10, 10, 100, -10);
+/*            CType c1 = new CType(10, 10, 10, 10, 100, -10);
             Product r1 = new Product("frozen pizza", 10, false);
             Product r3 = new Product("bananas", 10, false);
             c1.Load(r1);
@@ -43,7 +43,7 @@ namespace ContainerLogistics
             Console.WriteLine(c2.calculatePressure());
             c2.Load(g1);
             Console.WriteLine(c2.ToString());
-            c2.calculatePressure();
+            c2.calculatePressure();*/
 /*            CType c2 = new CType(10, 10, 10, 10, 100, 25);
             Refrigerated r2 = new Refrigerated("frozen pizza", 50);
             c2.Load(r2);*/
@@ -56,6 +56,26 @@ namespace ContainerLogistics
             n1.Load(p2);
             n1.Load(p3);
             Console.WriteLine(n1.ToString());*/
+
+            //creating a freighter
+            Freighter f1 = new Freighter(10, 1, 100);
+            //over qty limit
+            NType c1 = new NType(10, 1, 10, 10, 10);
+            Product p1 = new Product("wood", 10, false);
+            c1.Load(p1);
+            Console.WriteLine(c1.ToString());
+            NType c2 = new NType(10, 1, 10, 10, 10);
+            c2.Load(p1);
+            Console.WriteLine(c2.ToString());
+
+            f1.Load(c1);
+            f1.Unload(c1);
+            f1.Load(c2);
+            f1.Info();
+            //over weight limit
+            Freighter f2 = new Freighter(100, 100, 0.0001);
+            f2.Load(c1);
+            f2.Info();
         }
     }
 }

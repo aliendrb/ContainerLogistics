@@ -2,6 +2,19 @@
 {
     public class Vehicle
     {
+        public static int _nextId = 0;
+        public int Id { get; set; } = _nextId++;
+        public double CurrentLoad {get; set;}
+        public double MaxSpeed { get; set;}
+        public int MaxContainers {  get; set;}
+        public double MaxWeight {  get; set;}
+        public Vehicle(double maxSpeed, int maxContainers, double maxWeight) 
+        {
+            CurrentLoad = 0;
+            MaxSpeed = maxSpeed;
+            MaxContainers = maxContainers;
+            MaxWeight = maxWeight;
+        }
     }
 }
 // Requirements specify that there is only one type of vehicle needed: freighter
