@@ -16,21 +16,34 @@ namespace ContainerLogistics
             Product p2 = new Product("apples", 35000);
             Product p3 = new Product("oranges", 5000);*/
 
-            Liquid pl1 = new Liquid("milk", 90000, false);
-            LType l3 = new LType(10, 10, 10, 100000);
+/*            Liquid pl1 = new Liquid("milk", 90000, false);
+            LType l3 = new LType(10, 10, 10, 10, 100000);
             l3.Load(pl1);
 
             Liquid pl2 = new Liquid("apple juice", 100000, false);
-            LType l4 = new LType(10, 10, 10, 100000);
+            LType l4 = new LType(10, 10, 10, 10, 100000);
             l4.Load(pl2);
 
             Liquid pl3 = new Liquid("fuel", 50000, true);
-            LType l5 = new LType(10, 10, 10, 100000);
+            LType l5 = new LType(10, 10, 10, 10, 100000);
             l5.Load(pl3);
 
             Liquid pl4 = new Liquid("acid", 50001, true);
-            LType l6 = new LType(10, 10, 10, 100000);
-            l6.Load(pl4);
+            LType l6 = new LType(10, 10, 10, 10, 100000);
+            l6.Load(pl4);*/
+
+            CType c1 = new CType(10, 10, 10, 10, 100, -10);
+            Refrigerated r1 = new Refrigerated("bananas", 10);
+            Refrigerated r3 = new Refrigerated("bananas", 10);
+            c1.Load(r1);
+            c1.Load(r3);
+/*            CType c2 = new CType(10, 10, 10, 10, 100, 25);
+            Refrigerated r2 = new Refrigerated("frozen pizza", 50);
+            c2.Load(r2);*/
+
+            Console.WriteLine(c1.ToString());
+
+            Liquid l1 = new Liquid("water", 10, false);
 
 /*            n1.Load(p1);
             n1.Load(p2);

@@ -1,11 +1,34 @@
 ﻿namespace ContainerLogistics.Classes
 {
-    public class GType(int height, double weight, int depth, double maxWeight) : Container(height, weight, depth, maxWeight)
+    public class GType(int height, double weight, int depth, int width, double capacity) : Container(height, weight, depth, width, capacity)
     {
+        public new double Capacity { get; set; } //= CalculateWeight();
         public double AtmosphericPressure {  get; set; }
         public override string GenerateSerialNumber()
         {
             return "KON-G-" + Id;
+        }
+
+        public void Load(Gas product)
+        {
+            base.Load(product); //slicing, change products<Product> to generic i think
+        }
+
+        public void Unload(Gas product)
+        {
+
+        }
+        public void NotifyHazard(string message, Container container)
+        {
+            do
+            {
+                if (IsHazardOccured)
+                {
+                    Console.WriteLine($"Hazardous occurence: {message} at container {container.SerialNumber}");
+                    //TODO: change this to push notifs and include different occurences
+                }
+            }
+            while (!IsHazardOccured);
         }
     }
 }

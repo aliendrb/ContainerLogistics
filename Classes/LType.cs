@@ -3,9 +3,9 @@ using ContainerLogistics.Interfaces;
 
 namespace ContainerLogistics.Classes
 {
-    public class LType(int height, double weight, int depth, double maxWeight) : Container(height, weight, depth, maxWeight), IHazardNotifier
+    public class LType(int height, double weight, int depth, int width, double capacity) : Container(height, weight, depth, width, capacity), IHazardNotifier
     {
-        public bool IsHazardOccured {  get; set; }
+/*        public bool IsHazardOccured {  get; set; }*/
         public override string GenerateSerialNumber()
         {
             return "KON-L-" + Id;
@@ -15,18 +15,18 @@ namespace ContainerLogistics.Classes
         {
             try
             {
-                if (product.IsHazardous && (product.Weight + CargoMass) > 0.5 * MaxWeight)
+                if (product.IsHazardous && (product.Mass + CargoMass) > 0.5 * Capacity)
                 {
-                    throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight*0.5} kg");
+                    throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Mass + CargoMass - Capacity*0.5} kg");
                 }
-                else if (!product.IsHazardous&&(product.Weight+CargoMass)>0.9*MaxWeight)
+                else if (!product.IsHazardous&&(product.Mass+CargoMass)>0.9*Capacity)
                 {
-                    throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight*0.9} kg");
+                    throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Mass + CargoMass - Capacity*0.9} kg");
                 }
                 else
                 {
                     products.Add(product);
-                    CargoMass += product.Weight;
+                    CargoMass += product.Mass;
                 }
             }
             catch (OverfillException oe)

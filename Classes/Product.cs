@@ -6,12 +6,12 @@ namespace ContainerLogistics.Classes
     {
         private static int _nextId = 1;
         public string Name { get; }
-        public double Weight { get; }
+        public double Mass { get; }
         public int Id { get; } = _nextId++;
-        public Product(string name, double weight) 
+        public Product(string name, double mass) 
         {
             Name = name;
-            Weight = weight;
+            Mass = mass;
         }
     }
 }

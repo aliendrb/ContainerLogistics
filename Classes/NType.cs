@@ -1,10 +1,31 @@
-﻿namespace ContainerLogistics.Classes
+﻿using ContainerLogistics.Exception;
+
+namespace ContainerLogistics.Classes
 {
-    public class NType(int height, double weight, int depth, double maxWeight) : Container(height, weight, depth, maxWeight)
+    public class NType(int height, double weight, int depth, int width, double capacity) : Container(height, weight, depth, width, capacity)
     {
         public override string GenerateSerialNumber()
         {
             return "KON-N-" + Id;
+        }
+        public override void Load(Product product)
+        {
+            try
+            {
+                if ((product.Mass + CargoMass) > Capacity)
+                {
+                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Mass + CargoMass - Capacity} kg");
+                }
+                else
+                {
+                    products.Add(product);
+                    CargoMass += product.Mass;
+                }
+            }
+            catch (OverfillException oe)
+            {
+                Console.WriteLine(oe.Message);
+            }
         }
     }
 }
