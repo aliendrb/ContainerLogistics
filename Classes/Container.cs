@@ -27,13 +27,13 @@ namespace ContainerLogistics.Classes
 
         public abstract string GenerateSerialNumber();
 
-        public virtual void Unload(Product product) 
+        public void Unload(Product product) 
         {
             CargoMass -= product.Weight;
             products.Remove(product);
         }
 
-        public virtual void Load(Product product) 
+        public void Load(Product product) 
         {
             try 
             {
@@ -53,7 +53,8 @@ namespace ContainerLogistics.Classes
             }
         }
 
-        public virtual string ListContents() 
+        //could be generic type?
+        public string ListContents() 
         {
             foreach (Product product in products)
             {

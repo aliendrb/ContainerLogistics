@@ -1,6 +1,5 @@
 ﻿using ContainerLogistics.Exception;
 using ContainerLogistics.Interfaces;
-using System.ComponentModel;
 
 namespace ContainerLogistics.Classes
 {
@@ -12,17 +11,17 @@ namespace ContainerLogistics.Classes
             return "KON-L-" + Id;
         }
 
-        public override void Load(Product product)
+        public void Load(Liquid product)
         {
             try
             {
-                if (product.IsHazardous&&(product.Weight+CargoMass)>0.5*MaxWeight) 
+                if (product.IsHazardous && (product.Weight + CargoMass) > 0.5 * MaxWeight)
                 {
-                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight} kg");
+                    throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight*0.5} kg");
                 }
                 else if (!product.IsHazardous&&(product.Weight+CargoMass)>0.9*MaxWeight)
                 {
-                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight} kg");
+                    throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight*0.9} kg");
                 }
                 else
                 {

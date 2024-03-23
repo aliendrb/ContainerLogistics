@@ -7,13 +7,11 @@ namespace ContainerLogistics.Classes
         private static int _nextId = 1;
         public string Name { get; }
         public double Weight { get; }
-        public bool IsHazardous { get; }
         public int Id { get; } = _nextId++;
-        public Product(string name, double weight, bool isHazardous) 
+        public Product(string name, double weight) 
         {
             Name = name;
             Weight = weight;
-            IsHazardous = isHazardous;
         }
     }
 }

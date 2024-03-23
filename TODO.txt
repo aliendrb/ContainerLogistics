@@ -1,6 +1,11 @@
 ﻿Split Product into subclasses
 Implement correct methods for this in Container subclasses
 
-Listener in LType for listening if any hazards occured
-
 add Product subclasses?
+
+
+it is possible that I don't need NType class, I'd have to make GenerateSerialNumber method not abstract and make the same methods in subclasses not overwrite
+
+set up hazard notifications system with listener (multithreading or event handling)
+
+notifyhazard method in LType is infinite loop
