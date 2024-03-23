@@ -13,7 +13,7 @@ namespace ContainerLogistics.Classes
         public int Width { get; }
         public int Depth { get; }
         public string SerialNumber { get; }
-        public double Capacity { get; }
+        public double Capacity { get; set; }
         public List<Product> products { get; set; } = new List<Product>();
         public string contentsList { get; set; }
         public bool IsHazardOccured {  get; set; }

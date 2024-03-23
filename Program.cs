@@ -37,13 +37,20 @@ namespace ContainerLogistics
             Product r3 = new Product("bananas", 10, false);
             c1.Load(r1);
             c1.Load(r3);
+
+            Product g1 = new Product("air", 0.1, false);
+            GType c2 = new GType(200, 1, 200, 200, 1);
+            Console.WriteLine(c2.calculatePressure());
+            c2.Load(g1);
+            Console.WriteLine(c2.ToString());
+            c2.calculatePressure();
 /*            CType c2 = new CType(10, 10, 10, 10, 100, 25);
             Refrigerated r2 = new Refrigerated("frozen pizza", 50);
             c2.Load(r2);*/
 
-            Console.WriteLine(c1.ToString());
+/*            Console.WriteLine(c1.ToString());
 
-            Product l1 = new Product("water", 10, false);
+            Product l1 = new Product("water", 10, false);*/
 
 /*            n1.Load(p1);
             n1.Load(p2);

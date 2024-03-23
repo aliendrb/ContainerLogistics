@@ -8,25 +8,6 @@ namespace ContainerLogistics.Classes
         {
             return "KON-N-" + Id;
         }
-        public override void Load(Product product)
-        {
-            try
-            {
-                if ((product.Mass + CargoMass) > Capacity)
-                {
-                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Mass + CargoMass - Capacity} kg");
-                }
-                else
-                {
-                    products.Add(product);
-                    CargoMass += product.Mass;
-                }
-            }
-            catch (OverfillException oe)
-            {
-                Console.WriteLine(oe.Message);
-            }
-        }
     }
 }
 /*

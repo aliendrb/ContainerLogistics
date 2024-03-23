@@ -16,10 +16,12 @@ namespace ContainerLogistics.Classes
             {
                 if (product.IsHazardous && (product.Mass + CargoMass) > 0.5 * Capacity)
                 {
+                    NotifyHazard("overfill", this);
                     throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Mass + CargoMass - Capacity*0.5} kg");
                 }
                 else if (!product.IsHazardous&&(product.Mass+CargoMass)>0.9*Capacity)
                 {
+                    NotifyHazard("overfill", this);
                     throw new OverfillException($"An overfill occured in container {SerialNumber}. Cargo is too heavy by {product.Mass + CargoMass - Capacity*0.9} kg");
                 }
                 else
@@ -35,17 +37,24 @@ namespace ContainerLogistics.Classes
             }
         }
 
-        public void NotifyHazard(string message, Container container)
+        public void NotifyHazard(string type, Container container)
         {
-            do
+            switch (type)
             {
-                if (IsHazardOccured)
-                {
-                    Console.WriteLine($"Hazardous occurence: {message} at container {container.SerialNumber}");
+                case "explosion":
+                    Console.WriteLine($"Explosion at container {container.SerialNumber}");
+                    break;
+                case "leak":
+                    Console.WriteLine($"Leak at container {container.SerialNumber}");
+                    break;
+                case "overheat":
+                    Console.WriteLine($"Container {container.SerialNumber} is overheating.");
+                    break;
+                case "overfill":
+                    Console.WriteLine($"Container {container.SerialNumber} has been overfilled, check it immediately.");
+                    break;
                     //TODO: change this to push notifs and include different occurences
-                }
             }
-            while (!IsHazardOccured);
         }
     }
 

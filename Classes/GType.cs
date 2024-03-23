@@ -1,23 +1,40 @@
 ﻿namespace ContainerLogistics.Classes
 {
-    public class GType(int height, double weight, int depth, int width, double capacity) : Container(height, weight, depth, width, capacity)
+    public class GType : Container
     {
-        public new double Capacity { get; set; }
-        public double AtmosphericPressure {  get; set; }
+        public double Temperature { get; set; } = 273.15; //Temp in kelvin
+        public double Pressure {  get; set; }
+        public double Volume { get; }
+        public double R { get; set; } = 8.314; //ideal gas constant J/(mol * K)
+        public double MaxPressure { get; set; } = 443.61; //max pressure the tank can withstand, 443.61 atm
+        public double MolarMass { get; set; } = 28.97; //molar mass of air 28.97g/mol
+        public GType(int height, double weight, int depth, int width, double capacity) : base(height, weight, depth, width, capacity) 
+        {
+            Volume = (height / 100.0) * (depth / 100.0) * (width / 100.0);
+            Capacity = calculateCapacity();
+            Console.WriteLine($"TOTAL CAPACITY IN KG: {Capacity}");
+        }
         public override string GenerateSerialNumber()
         {
             return "KON-G-" + Id;
         }
 
-        public void Load(Product product)
+        public override void Load(Product product)
         {
             base.Load(product);
         }
 
-        //remove capacity from constructor, instead calculate it based on volume
-        public void calculatePressure(Product product) 
+        public double calculatePressure() 
         {
-            AtmosphericPressure = product.Mass / Capacity;
+            double P = ((((CargoMass * 1000) / MolarMass) * R * Temperature) / Volume) / 1000.0; //this isn't accurate, it should be divided by 100_000 instead of 1000 at the end
+
+            Console.WriteLine("Pressure inside the tank: " + P.ToString("0.00000") + " bar");
+            return P;
+        }
+
+        public double calculateCapacity() 
+        {
+            return (((MaxPressure * Volume) / (R * Temperature)) * MolarMass); //capacity in kgs
         }
 
         public override void Unload(Product product)
@@ -26,19 +43,24 @@
         }
         public void Prepare()
         {
+            CargoMass = 0;
             products.Clear();
         }
-        public void NotifyHazard(string message, Container container)
+        public void NotifyHazard(string type, Container container)
         {
-            do
+            switch (type)
             {
-                if (IsHazardOccured)
-                {
-                    Console.WriteLine($"Hazardous occurence: {message} at container {container.SerialNumber}");
+                case "explosion":
+                    Console.WriteLine($"Explosion at container {container.SerialNumber}");
+                    break;
+                case "leak":
+                    Console.WriteLine($"Leak at container {container.SerialNumber}");
+                    break;
+                case "overheat":
+                    Console.WriteLine($"Container {container.SerialNumber} is overheating.");
+                    break;
                     //TODO: change this to push notifs and include different occurences
-                }
             }
-            while (!IsHazardOccured);
         }
     }
 }
