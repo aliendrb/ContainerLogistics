@@ -1,7 +1,5 @@
 ﻿using ContainerLogistics.Exception;
 using ContainerLogistics.Interfaces;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ContainerLogistics.Classes
 {
@@ -9,16 +7,16 @@ namespace ContainerLogistics.Classes
     {
         private static int _nextId = 1;
         public int Id { get; } = _nextId++;
-        public float CargoMass { get; set; }
+        public double CargoMass { get; set; }
         public int Height { get; }
-        public float Weight { get; }
+        public double Weight { get; }
         public int Depth { get; }
         public string SerialNumber { get; }
-        public float MaxWeight { get; }
+        public double MaxWeight { get; }
         public List<Product> products { get; set; } = new List<Product>();
         public string contentsList { get; set; }
 
-        public Container(int height, float weight, int depth, float maxWeight)
+        public Container(int height, double weight, int depth, double maxWeight)
         {
             Height = height;
             Weight = weight;
@@ -29,13 +27,13 @@ namespace ContainerLogistics.Classes
 
         public abstract string GenerateSerialNumber();
 
-        public void Unload(Product product) 
+        public virtual void Unload(Product product) 
         {
             CargoMass -= product.Weight;
             products.Remove(product);
         }
 
-        public void Load(Product product) 
+        public virtual void Load(Product product) 
         {
             try 
             {
@@ -55,18 +53,18 @@ namespace ContainerLogistics.Classes
             }
         }
 
-        public string ListContents() 
+        public virtual string ListContents() 
         {
             foreach (Product product in products)
             {
-                contentsList += $"[{product.Id}, {product.Name}, {product.Weight}]\n";
+                contentsList += $"[ID: {product.Id}, {product.Name}, {product.Weight} kg]\n";
             }
             return contentsList;
         }
 
         public override string ToString()
         {
-            return $"\n\nSerial Number: {SerialNumber}\nWeight: {Weight}\nHeight: {Height}\nDepth: {Depth}\nMaximum Weight: {MaxWeight}\nCargo Weight: {CargoMass}\nContents:\n{ListContents()}\n\n";
+            return $"\n\nSerial Number: {SerialNumber}\nWeight: {Weight} kg\nHeight: {Height} cm\nDepth: {Depth} cm\nMaximum Weight: {MaxWeight} kg\nCargo Weight: {CargoMass} kg\nContents:\n{ListContents()}\n\n";
         }
         /*
          * Cargo mass (kg)

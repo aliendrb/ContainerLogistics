@@ -1,7 +1,8 @@
 ﻿namespace ContainerLogistics.Classes
 {
-    public class GType(int height, float weight, int depth, float maxWeight) : Container(height, weight, depth, maxWeight)
+    public class GType(int height, double weight, int depth, double maxWeight) : Container(height, weight, depth, maxWeight)
     {
+        public double AtmosphericPressure {  get; set; }
         public override string GenerateSerialNumber()
         {
             return "KON-G-" + Id;
@@ -17,3 +18,5 @@
  *  - Implements interface IHazardNotifier which allows sending text notification in case of dangerous situation and includes container serial number
  *  - if cargo mass is greater than container capacity we should throw an exception
  */
+
+//TODO: change up max weight etc, also do this in liquid container

@@ -1,6 +1,6 @@
 ﻿namespace ContainerLogistics.Classes
 {
-    public class CType(int height, float weight, int depth, float maxWeight) : Container(height, weight, depth, maxWeight)
+    public class CType(int height, double weight, int depth, double maxWeight) : Container(height, weight, depth, maxWeight)
     {
         public override string GenerateSerialNumber()
         {

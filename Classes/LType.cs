@@ -1,12 +1,55 @@
-﻿namespace ContainerLogistics.Classes
+﻿using ContainerLogistics.Exception;
+using ContainerLogistics.Interfaces;
+using System.ComponentModel;
+
+namespace ContainerLogistics.Classes
 {
-    public class LType(int height, float weight, int depth, float maxWeight) : Container(height, weight, depth, maxWeight)
+    public class LType(int height, double weight, int depth, double maxWeight) : Container(height, weight, depth, maxWeight), IHazardNotifier
     {
+        public bool IsHazardOccured {  get; set; }
         public override string GenerateSerialNumber()
         {
             return "KON-L-" + Id;
         }
+
+        public override void Load(Product product)
+        {
+            try
+            {
+                if (product.IsHazardous&&(product.Weight+CargoMass)>0.5*MaxWeight) 
+                {
+                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight} kg");
+                }
+                else if (!product.IsHazardous&&(product.Weight+CargoMass)>0.9*MaxWeight)
+                {
+                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight} kg");
+                }
+                else
+                {
+                    products.Add(product);
+                    CargoMass += product.Weight;
+                }
+            }
+            catch (OverfillException oe)
+            {
+                Console.WriteLine(oe.Message);
+            }
+        }
+
+        public void NotifyHazard(string message, Container container)
+        {
+            do
+            {
+                if (IsHazardOccured)
+                {
+                    Console.WriteLine($"Hazardous occurence: {message} at container {container.SerialNumber}");
+                    //TODO: change this to push notifs and include different occurences
+                }
+            }
+            while (!IsHazardOccured);
+        }
     }
+
 }
 /*
  * ADDITIONAL INFO

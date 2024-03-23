@@ -1,3 +1,6 @@
-﻿Figure out all the class attributes
+﻿Split Product into subclasses
+Implement correct methods for this in Container subclasses
 
-Interface for assigning serial numbers
+Listener in LType for listening if any hazards occured
+
+add Product subclasses?
