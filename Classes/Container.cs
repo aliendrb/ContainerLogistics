@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.ComponentModel;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ContainerLogistics.Exception;
 using ContainerLogistics.Interfaces;
+using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ContainerLogistics.Classes
 {
@@ -19,8 +15,10 @@ namespace ContainerLogistics.Classes
         public int Depth { get; }
         public string SerialNumber { get; }
         public float MaxWeight { get; }
+        public List<Product> products { get; set; } = new List<Product>();
+        public string contentsList { get; set; }
 
-        public Container(int height, float weight, int depth, float maxWeight) 
+        public Container(int height, float weight, int depth, float maxWeight)
         {
             Height = height;
             Weight = weight;
@@ -31,7 +29,45 @@ namespace ContainerLogistics.Classes
 
         public abstract string GenerateSerialNumber();
 
-        public void Unload() { CargoMass = 0; }
+        public void Unload(Product product) 
+        {
+            CargoMass -= product.Weight;
+            products.Remove(product);
+        }
+
+        public void Load(Product product) 
+        {
+            try 
+            {
+                if((product.Weight + CargoMass) > MaxWeight) 
+                {
+                    throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Weight + CargoMass - MaxWeight} kg");
+                }
+                else 
+                {
+                    products.Add(product);
+                    CargoMass += product.Weight;
+                }
+            }
+            catch (OverfillException oe) 
+            {
+                Console.WriteLine(oe.Message);
+            }
+        }
+
+        public string ListContents() 
+        {
+            foreach (Product product in products)
+            {
+                contentsList += $"[{product.Id}, {product.Name}, {product.Weight}]\n";
+            }
+            return contentsList;
+        }
+
+        public override string ToString()
+        {
+            return $"\n\nSerial Number: {SerialNumber}\nWeight: {Weight}\nHeight: {Height}\nDepth: {Depth}\nMaximum Weight: {MaxWeight}\nCargo Weight: {CargoMass}\nContents:\n{ListContents()}\n\n";
+        }
         /*
          * Cargo mass (kg)
          * Height (cm)

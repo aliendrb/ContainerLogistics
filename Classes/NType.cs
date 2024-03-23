@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContainerLogistics.Classes
+﻿namespace ContainerLogistics.Classes
 {
     public class NType(int height, float weight, int depth, float maxWeight) : Container(height, weight, depth, maxWeight)
     {
@@ -14,3 +8,8 @@ namespace ContainerLogistics.Classes
         }
     }
 }
+/*
+ * ADDITIONAL INFO
+ * My structure implementation requires that I add also normal type containers (N type in serial number)
+ *  - because it is my own class, not specified by the requirements, there are no rules besides the weight capacity
+ */

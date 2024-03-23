@@ -7,15 +7,17 @@ namespace ContainerLogistics
         static void Main(string[] args)
         {
             LType l1 = new LType(200, 50, 10000, 50000);
-            Console.WriteLine(l1.SerialNumber);
             GType g1 = new GType(150, 30, 5000, 25000);
-            Console.WriteLine(g1.SerialNumber);
             CType c1 = new CType(175, 45, 7500, 40000);
-            Console.WriteLine(c1.SerialNumber);
             NType n1 = new NType(300, 75, 15000, 75000);
-            Console.WriteLine(n1.SerialNumber);
             LType l2 = new LType(100, 20, 3000, 5000);
-            Console.WriteLine(l2.SerialNumber);
+            Product p1 = new Product("bananas", 100000);
+            Product p2 = new Product("apples", 35000);
+            Product p3 = new Product("oranges", 5000);
+            n1.Load(p1);
+            n1.Load(p2);
+            n1.Load(p3);
+            Console.WriteLine(n1.ToString());
         }
     }
 }
