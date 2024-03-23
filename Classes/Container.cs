@@ -30,7 +30,7 @@ namespace ContainerLogistics.Classes
 
         public abstract string GenerateSerialNumber();
 
-        public void Unload(Product product) 
+        public virtual void Unload(Product product) 
         {
             CargoMass -= product.Mass;
             products.Remove(product);
@@ -56,7 +56,6 @@ namespace ContainerLogistics.Classes
             }
         }
 
-        //could be generic type?
         public virtual string ListContents() 
         {
             foreach (Product product in products)
@@ -68,7 +67,7 @@ namespace ContainerLogistics.Classes
 
         public override string ToString()
         {
-            return $"\n\nSerial Number: {SerialNumber}\nWeight: {Weight} kg\nHeight: {Height} cm\nDepth: {Depth} cm\nMaximum Weight: {Capacity} kg\nCargo Weight: {CargoMass} kg\nContents:\n{ListContents()}\n\n";
+            return $"Serial Number: {SerialNumber}\nWeight: {Weight} kg\nHeight: {Height} cm\nDepth: {Depth} cm\nMaximum Weight: {Capacity} kg\nCargo Weight: {CargoMass} kg\nContents:\n{ListContents()}";
         }
     }
 }

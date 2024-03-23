@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace ContainerLogistics.Classes
+﻿namespace ContainerLogistics.Classes
 {
     public class Product
     {
@@ -8,10 +6,12 @@ namespace ContainerLogistics.Classes
         public string Name { get; }
         public double Mass { get; }
         public int Id { get; } = _nextId++;
-        public Product(string name, double mass) 
+        public bool IsHazardous { get; }
+        public Product(string name, double mass, bool isHazardous) 
         {
             Name = name;
             Mass = mass;
+            IsHazardous = isHazardous;
         }
     }
 }

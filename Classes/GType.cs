@@ -2,21 +2,31 @@
 {
     public class GType(int height, double weight, int depth, int width, double capacity) : Container(height, weight, depth, width, capacity)
     {
-        public new double Capacity { get; set; } //= CalculateWeight();
+        public new double Capacity { get; set; }
         public double AtmosphericPressure {  get; set; }
         public override string GenerateSerialNumber()
         {
             return "KON-G-" + Id;
         }
 
-        public void Load(Gas product)
+        public void Load(Product product)
         {
-            base.Load(product); //slicing, change products<Product> to generic i think
+            base.Load(product);
         }
 
-        public void Unload(Gas product)
+        //remove capacity from constructor, instead calculate it based on volume
+        public void calculatePressure(Product product) 
         {
+            AtmosphericPressure = product.Mass / Capacity;
+        }
 
+        public override void Unload(Product product)
+        {
+            CargoMass -= product.Mass * 0.95;
+        }
+        public void Prepare()
+        {
+            products.Clear();
         }
         public void NotifyHazard(string message, Container container)
         {

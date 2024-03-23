@@ -33,8 +33,8 @@ namespace ContainerLogistics
             l6.Load(pl4);*/
 
             CType c1 = new CType(10, 10, 10, 10, 100, -10);
-            Refrigerated r1 = new Refrigerated("bananas", 10);
-            Refrigerated r3 = new Refrigerated("bananas", 10);
+            Product r1 = new Product("frozen pizza", 10, false);
+            Product r3 = new Product("bananas", 10, false);
             c1.Load(r1);
             c1.Load(r3);
 /*            CType c2 = new CType(10, 10, 10, 10, 100, 25);
@@ -43,7 +43,7 @@ namespace ContainerLogistics
 
             Console.WriteLine(c1.ToString());
 
-            Liquid l1 = new Liquid("water", 10, false);
+            Product l1 = new Product("water", 10, false);
 
 /*            n1.Load(p1);
             n1.Load(p2);

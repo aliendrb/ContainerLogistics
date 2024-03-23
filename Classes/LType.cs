@@ -5,13 +5,12 @@ namespace ContainerLogistics.Classes
 {
     public class LType(int height, double weight, int depth, int width, double capacity) : Container(height, weight, depth, width, capacity), IHazardNotifier
     {
-/*        public bool IsHazardOccured {  get; set; }*/
         public override string GenerateSerialNumber()
         {
             return "KON-L-" + Id;
         }
 
-        public void Load(Liquid product)
+        public override void Load(Product product)
         {
             try
             {
@@ -25,6 +24,7 @@ namespace ContainerLogistics.Classes
                 }
                 else
                 {
+                    //I could do base.Load() here but it has additional ifs that would have to be checked.
                     products.Add(product);
                     CargoMass += product.Mass;
                 }

@@ -24,16 +24,16 @@ I see that creating additional product subclasses isn't optimal. Delete them
      *  - L type in serial number (e.g. KON-L-1)                                                                                                             ==DONE==
      *  - Allow liquid transportation
      *      - two types of liquids: hazardous (e.g. fuel), normal (e.g. milk)                                                                                ==DONE==
-     *  - Implements interface IHazardNotifier which allows sending text notification in case of dangerous situation and includes container serial number    == 50% ==
+     *  - Implements interface IHazardNotifier which allows sending text notification in case of dangerous situation and includes container serial number    ==CHECK==
      *  - When running loading method we should check:
      *      - if the container's holding hazardous cargo, we can only fill 50% of total capacity                                                             ==DONE==   
      *      - otherwise we can fill 90% of total capacity                                                                                                    ==DONE==
-     *      - push notification about dangerous user action if user tries to fill more than permitted by these rules                                         == 90% ==
+     *      - push notification about dangerous user action if user tries to fill more than permitted by these rules                                         ==CHECK==
      * Gas container:
      *  - G type in serial number                                                                                                                            ==DONE==
-     *  - Holds additional info about atmospheric pressure inside the container                                                                              == 0% ==
-     *  - While unloading this container 5% of its cargo is left inside                                                                                      == 0% ==
-     *  - Implements interface IHazardNotifier which allows sending text notification in case of dangerous situation and includes container serial number    == 50% ==
+     *  - Holds additional info about atmospheric pressure inside the container                                                                              ==25%==
+     *  - While unloading this container 5% of its cargo is left inside                                                                                      ==DONE==
+     *  - Implements interface IHazardNotifier which allows sending text notification in case of dangerous situation and includes container serial number    ==CHECK==
      *  - if cargo mass is greater than container capacity we should throw an exception                                                                      == 0% ==
      * Refrigerated container:
      *  - C type in serial number                                                                                                                            ==DONE==

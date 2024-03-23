@@ -22,7 +22,7 @@ namespace ContainerLogistics.Classes
         {
             return "KON-C-" + Id;
         }
-        public void Load(Refrigerated product)
+        public override void Load(Product product)
         {
             double minTemp;
             maximumTemperatures.TryGetValue(product.Name, out minTemp);
@@ -43,31 +43,13 @@ namespace ContainerLogistics.Classes
                 }
             }
             base.Load(product);
-                //CODE DOUBLING HERE, FIX THAT
-/*                try
-                {
-                    if ((product.Mass + CargoMass) > Capacity)
-                    {
-                        throw new OverfillException($"An overfill occured. Cargo is too heavy by {product.Mass + CargoMass - Capacity} kg");
-                    }
-                    else
-                    {
-                        products.Add(product);
-                        CargoMass += product.Mass;
-                    }
-                }
-                catch (OverfillException oe)
-                {
-                    Console.WriteLine(oe.Message);
-                }*/
-            //END OF CODE DOUBLING
         }
 
 
         //CODE DOUBLING
         public override string ToString()
         {
-            return $"\n\nSerial Number: {SerialNumber}\nTemperature inside: {TemperatureInside}\nWeight: {Weight} kg\nHeight: {Height} cm\nDepth: {Depth} cm\nMaximum Weight: {Capacity} kg\nCargo Weight: {CargoMass} kg\nContents:\n{ListContents()}\n\n";
+            return $"Temperature inside: {TemperatureInside}\n"+base.ToString();
         }
     }
 }
