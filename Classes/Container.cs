@@ -5,7 +5,7 @@ namespace ContainerLogistics.Classes
 {
     public abstract class Container : ISerialNumberGenerator
     {
-        private static int _nextId = 1;
+        private static int _nextId = 0;
         public int Id { get; } = _nextId++;
         public double CargoMass { get; set; }
         public int Height { get; }
@@ -59,9 +59,12 @@ namespace ContainerLogistics.Classes
         public virtual string ListContents() 
         {
             ContentsList = "";
-            foreach (Product product in Products)
+            if (Products != null)
             {
-                ContentsList += $"[ID: {product.Id}, {product.Name}, {product.Mass} kg]\n";
+                foreach (Product product in Products)
+                {
+                    ContentsList += $"[ID: {product.Id}, {product.Name}, {product.Mass} kg]\n";
+                }
             }
             return ContentsList;
         }

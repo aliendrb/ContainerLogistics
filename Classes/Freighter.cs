@@ -2,16 +2,26 @@
 {
     public class Freighter : Vehicle
     {
-        public List<Container> containers = new List<Container>();
+        public List<Container> Containers = new List<Container>();
         public Freighter(double maxSpeed, int maxContainers, double maxWeight) : base(maxSpeed, maxContainers, maxWeight) 
         {
-
+            MaxSpeed = maxSpeed;
+            MaxContainers = maxContainers;
+            MaxWeight = maxWeight;
         }
         public void Load(Container container) 
         {
-            if(containers.Count()<MaxContainers && ((CurrentLoad+container.CargoMass+container.Weight) < MaxWeight*1000)) 
+            foreach (Container checkedContainer in Containers)
             {
-                containers.Add(container);
+                if (checkedContainer.Id == container.Id) 
+                {
+                    Console.WriteLine($"Container with ID {container.Id} is already loaded.");
+                    return;
+                }
+            }
+            if (Containers.Count()<MaxContainers && ((CurrentLoad+container.CargoMass+container.Weight) < MaxWeight*1000)) 
+            {
+                Containers.Add(container);
                 CurrentLoad += container.CargoMass + container.Weight;
             }
             else 
@@ -26,11 +36,21 @@
             {
                 totalWeight += container.CargoMass + container.Weight;
             }
-            if(((containers.Count()+loadedContainers.Count()) < MaxContainers) && ((CurrentLoad+totalWeight)<MaxWeight*1000)) 
+            if(((Containers.Count()+loadedContainers.Count()) < MaxContainers) && ((CurrentLoad+totalWeight)<MaxWeight*1000)) 
             {
                 foreach(Container container in loadedContainers) 
                 {
-                    containers.Add(container);
+                    foreach (Container checkedContainer in Containers)
+                    {
+                        if (checkedContainer.Id == container.Id)
+                        {
+                            Console.WriteLine($"Container with ID {container.Id} is already loaded.");
+                        }
+                        else 
+                        {
+                            Containers.Add(container);
+                        }
+                    }
                 }
                 CurrentLoad += totalWeight;
             }
@@ -42,13 +62,13 @@
         public void Unload(Container container) 
         {
             CurrentLoad -= (container.CargoMass+container.Weight);
-            containers.Remove(container);
+            Containers.Remove(container);
         }
         public void Swap(Container added, Container subtracted) 
         {
             CurrentLoad += (added.CargoMass+added.Weight) - (subtracted.CargoMass+subtracted.Weight);
-            containers.Remove(subtracted);
-            containers.Add(added);
+            Containers.Remove(subtracted);
+            Containers.Add(added);
         }
         public void SwitchShip(Container container, Freighter freighter) 
         {
@@ -58,9 +78,12 @@
         public void Info() 
         {
             Console.WriteLine($"Freighter {Id}\nMax speed: {MaxSpeed}\nMax weight: {MaxWeight}t\nMax containers: {MaxContainers}\nCurrent load: {CurrentLoad/1000}t\n");
-            foreach(Container container in containers) 
+            if (Containers != null)
             {
-                Console.WriteLine(container.ToString());
+                foreach (Container container in Containers)
+                {
+                    Console.WriteLine(container.ToString());
+                }
             }
         }
     }
