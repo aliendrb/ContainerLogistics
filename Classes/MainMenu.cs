@@ -8,7 +8,7 @@ namespace ContainerLogistics.Classes
         List<Container> Containers = new List<Container>();
         string input = "";
         bool resume = true;
-        bool innerResume = true;
+        bool Found = true;
         public MainMenu() 
         {
             Start();
@@ -17,14 +17,14 @@ namespace ContainerLogistics.Classes
         {
             while (resume)
             {
-/*                ListFreighters(); //these two are causing printing after freighter/container addition.
-                ListContainers();*/
+                Console.Clear();
+                ListFreighters();
+                ListContainers();
                 Startup();
             }
         }
         public void Startup() 
         {
-            Console.Clear();
             Console.WriteLine("Possible actions:\n1. Add freigher\n2. Add container");
             if (Freighters.Count == 0) 
             {
@@ -125,34 +125,57 @@ namespace ContainerLogistics.Classes
             {
                 int temp = Int32.Parse(input);
                 Freighters.ElementAt(Int32.Parse(input)).Info();
-                Console.WriteLine("1. Load container\n2. Load multiple containers\n3. Unload container\n4. Delete freighter\n5. Swap container between freighters\n6. Switch container with a different one");
+                Console.WriteLine("1. Load container\n2. Load multiple containers\n3. Unload container\n4. Delete freighter\n5. Swap container between freighters\n6. Switch container with a different one\n7. Return");
                 Console.Write("Input: ");
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        if(Containers.Count == 0) 
-                        {
-                            Console.Clear();
-                            Console.WriteLine("No containers registered.");
-                            Thread.Sleep(2000);
-                            break;
-                        }
-                        foreach (Container container in Containers)
-                        {
-                            Console.WriteLine(container.ToString()); //make Info(); method
-                        }
+                        ListContainers();
                         Console.Write("Serial number input, only the number part: ");
                         Freighters.ElementAt(temp).Load(Containers.ElementAt(Int32.Parse(Console.ReadLine())));
                         break;
                     case "2":
+                        ListContainers();
+                        Console.Write("Formatting: number,number,number,number...\nSerial numbers input, only the number part: ");
+                        input = Console.ReadLine();
+                        string[] strings = input.Split(',');
+                        List<Container> tempContainers = new List<Container>();
+                        foreach(string s in strings) 
+                        {
+                            foreach(Container container in Containers) 
+                            {
+                                if(container.Id == Int32.Parse(s)) 
+                                {
+                                    tempContainers.Add(container);
+                                }
+                            }
+                        }
+                        Freighters.ElementAt(temp).Load(tempContainers);
                         break;
                     case "3":
+                        ListContainers();
+                        Console.Write("Serial number input, only the number part: ");
+                        Freighters.ElementAt(temp).Unload(Containers.ElementAt(Int32.Parse(Console.ReadLine())));
                         break;
                     case "4":
+                        Freighters.Remove(Freighters.ElementAt(temp));
                         break;
                     case "5":
+                        ListContainers();
+                        Console.Write("Formatting: containerID,freighterID\nSerial numbers input, only the number part: ");
+                        input = Console.ReadLine();
+                        string[] strings2 = input.Split(',');
+                        Freighters.ElementAt(temp).SwitchShip(Containers.ElementAt(Int32.Parse(strings2.ElementAt(0))), Freighters.ElementAt(Int32.Parse(strings2.ElementAt(1))));
                         break;
                     case "6":
+                        ListContainers();
+                        Console.Write("Formatting: loadContainerID,unloadContainerID\nSerial numbers input, only the number part: ");
+                        input = Console.ReadLine();
+                        string[] strings3 = input.Split(',');
+                        Freighters.ElementAt(temp).Swap(Containers.ElementAt(Int32.Parse(strings3.ElementAt(0))), Containers.ElementAt(Int32.Parse(strings3.ElementAt(1))));
+                        break;
+                    case "7":
+
                         break;
                 }
             }
@@ -163,10 +186,21 @@ namespace ContainerLogistics.Classes
             ListContainers();
             Console.Write("Container ID input: ");
             input = Console.ReadLine();
+            foreach (Container container in Containers) 
+            {
+                if (container.Id==Int32.Parse(input)) 
+                {
+                    Found = true;
+                    break;
+                }
+                Found = false;
+            }
+
             Console.Clear();
-            if (Int32.Parse(input) > Containers.Count) //this logic is flawed if I have more containers than I loaded into the freighter
+            if (!Found)
             {
                 Console.WriteLine("Invalid ID.");
+                Thread.Sleep(1500);
             }
             else
             {
@@ -189,7 +223,7 @@ namespace ContainerLogistics.Classes
                         Console.WriteLine(Containers.ElementAt(temp).ToString());
                         Console.Write("ID of product to unload: ");
                         input = Console.ReadLine();
-                        Containers.ElementAt(temp).Unload(Containers.ElementAt(temp).Products.ElementAt(Int32.Parse(input))); //this logic is also flawed but it's 3:20 am
+                        Containers.ElementAt(temp).Unload(Containers.ElementAt(temp).Products.ElementAt(Int32.Parse(input)-1));
                         break;
                     case "3":
                         Containers.Remove(Containers.ElementAt(temp));
@@ -234,16 +268,26 @@ namespace ContainerLogistics.Classes
         }
         public void ListFreighters() 
         {
-            foreach(Freighter freighter in Freighters) 
+            if (Freighters.Count == 0)
+            {
+                Console.WriteLine("No freighters registered.");
+                return;
+            }
+            foreach (Freighter freighter in Freighters) 
             {
                 freighter.Info();
             }
         }
         public void ListContainers() 
         {
-            foreach(Container container in Containers) 
+            if (Containers.Count == 0)
             {
-                Console.WriteLine(container.ToString());
+                Console.WriteLine("No containers registered.");
+                return;
+            }
+            foreach (Container container in Containers) 
+            {
+                Console.WriteLine(container.ToString()); //make Info(); method
             }
         }
     }

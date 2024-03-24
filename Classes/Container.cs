@@ -73,5 +73,9 @@ namespace ContainerLogistics.Classes
         {
             return $"Serial Number: {SerialNumber}\nWeight: {Weight} kg\nHeight: {Height} cm\nDepth: {Depth} cm\nMaximum Weight: {Capacity} kg\nCargo Weight: {CargoMass} kg\nContents:\n{ListContents()}";
         }
+        public string GetSN() 
+        {
+            return SerialNumber;
+        }
     }
 }
