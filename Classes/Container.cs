@@ -53,6 +53,7 @@ namespace ContainerLogistics.Classes
             catch (OverfillException oe) 
             {
                 Console.WriteLine(oe.Message);
+                Thread.Sleep(2000);
             }
         }
 
